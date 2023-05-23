@@ -15,7 +15,7 @@ const usersTableQuery = `CREATE TABLE IF NOT EXISTS Users (
   username VARCHAR (50) NOT NULL,
   user_name VARCHAR (50) NOT NULL,
   user_surname VARCHAR (50) NOT NULL,
-  user_password VARCHAR (20) NOT NULL,
+  user_password CHAR (44) NOT NULL,
   PRIMARY KEY (username)
 );`;
 
