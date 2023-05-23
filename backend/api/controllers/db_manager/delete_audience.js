@@ -13,9 +13,15 @@ export default async (req, res) => {
 
     db.query(checkAudienceQuery, (err, data) => {
 
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+      }
+
       if (!data['rows'][0]) {
         return res.status(404).json({ resultMessage: 'An audience with the given username could not be find.' });
       }
+
       db.query(deleteAudienceQuery, (err, data) => {
         if (err) {
           console.log(err);
