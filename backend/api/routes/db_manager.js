@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import verify from '../../verify.js'
-import { addDirector, addAudience, deleteAudience } from '../controllers/db_manager/index.js';
+import { addDirector, updateDirector, addAudience, deleteAudience } from '../controllers/db_manager/index.js';
 
 const router = Router();
 
@@ -10,5 +10,6 @@ const router = Router();
 router.post('/add_director', verify.verifyManager, addDirector);
 router.post('/add_audience',verify.verifyManager, addAudience);
 router.delete('/delete_audience',verify.verifyManager, deleteAudience);
+router.put('/update_director',verify.verifyManager, updateDirector);
 
 export default router
