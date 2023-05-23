@@ -42,7 +42,7 @@ export default async (req, res) => {
         db.query(revertUserQuery);
         return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
       } else {
-        return res.status(200).json({ resultMessage: "Instructor is successfully added." });
+        return res.status(200).json({ resultMessage: "Director is successfully added." });
       }
     });
 
