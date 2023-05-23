@@ -37,7 +37,7 @@ export default async (req, res) => {
     db.query(addDirectorQuery, (err, data) => {
       if (err) {
         const revertUserQuery = `
-        DELETE FROM Users WHERE username = ${body.username};
+        DELETE FROM Users WHERE username = '${body.username}';
         `;
         db.query(revertUserQuery);
         return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
