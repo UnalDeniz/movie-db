@@ -25,48 +25,49 @@ export default async (req, res) => {
       if (err) {
         return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
       }
-    });
+      db.query(addAudienceQuery, (err, data) => {
+        if (err) {
+          const revertUserQuery = `
+          DELETE FROM Users WHERE username = '${body.username}';
+          `;
+          db.query(revertUserQuery);
+          return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+        }
+        if (!body.subbed_platforms) {
 
-    db.query(addAudienceQuery, (err, data) => {
-      if (err) {
-        const revertUserQuery = `
-        DELETE FROM Users WHERE username = '${body.username}';
-        `;
-        db.query(revertUserQuery);
-        return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
-      }
-    });
-    if (!body.subbed_platforms) {
+          return res.status(200).json({ resultMessage: "Audience is successfully added." });
 
-      return res.status(200).json({ resultMessage: "Audience is successfully added." });
+        } else {
 
-    } else {
+          let size = body.subbed_platforms.length;
 
-      let size = body.subbed_platforms.length;
+          for (let i = 0; i < size; i++) {
 
-      for (let i = 0; i < size; i++) {
-
-        let addSubscribeQuery = `
-          INSERT INTO Subscribes (platform_id, username)
-          VALUES (${body.subbed_platforms[i]}, '${body.username}'); 
-        `;
-
-        db.query(addSubscribeQuery, (err, data) => {
-          if (err) {
-            const revertUserQuery = `
-            DELETE FROM Users WHERE username = '${body.username}';
+            let addSubscribeQuery = `
+              INSERT INTO Subscribes (platform_id, username)
+              VALUES (${body.subbed_platforms[i]}, '${body.username}'); 
             `;
-            db.query(revertUserQuery);
-            return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+
+            db.query(addSubscribeQuery, (err, data) => {
+              if (err) {
+                const revertUserQuery = `
+                DELETE FROM Users WHERE username = '${body.username}';
+                `;
+                db.query(revertUserQuery);
+                return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+              } else {
+                if (i == size - 1) {
+                  return res.status(200).json({ resultMessage: "Audience is successfully added." });
+                }
+              }
+            });
           }
-        });
-      }
-
-      return res.status(200).json({ resultMessage: "Audience is successfully added." });
-    }
-
+        }
+      });
+    });
   } catch (err) {
-    console.log(err);
+
     return res.status(500).json({ resultMessage: `An unexpected server error occurred. Err: ${err.message}` });
+
   }
 };

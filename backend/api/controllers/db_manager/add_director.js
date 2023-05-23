@@ -32,21 +32,18 @@ export default async (req, res) => {
       if (err) {
         return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
       }
+      db.query(addDirectorQuery, (err, data) => {
+        if (err) {
+          const revertUserQuery = `
+          DELETE FROM Users WHERE username = '${body.username}';
+          `;
+          db.query(revertUserQuery);
+          return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+        } else {
+          return res.status(200).json({ resultMessage: "Director is successfully added." });
+        }
+      });
     });
-
-    db.query(addDirectorQuery, (err, data) => {
-      if (err) {
-        const revertUserQuery = `
-        DELETE FROM Users WHERE username = '${body.username}';
-        `;
-        db.query(revertUserQuery);
-        return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
-      } else {
-        return res.status(200).json({ resultMessage: "Director is successfully added." });
-      }
-    });
-
-
   } catch (err) {
     console.log(err);
     return res.status(500).json({ resultMessage: `An unexpected server error occurred. Err: ${err.message}` });
