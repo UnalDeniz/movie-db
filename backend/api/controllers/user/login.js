@@ -15,7 +15,6 @@ const UserController = {
         return res.status(400).send({message: "Provide a password"});
       } 
       const hashedPassword = crypto.createHash('sha256').update(body.password).digest('base64');
-      console.log(hashedPassword);
       const query = `
         SELECT * FROM Users WHERE username = '${body.username}' AND user_password = '${hashedPassword}';
         `;
