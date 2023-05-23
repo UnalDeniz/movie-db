@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addDirector } from '../controllers/db_manager/index.js';
+import { addDirector, addAudience } from '../controllers/db_manager/index.js';
 
 const router = Router();
 
@@ -7,5 +7,6 @@ const router = Router();
 //router.get('/path', function);
 
 router.post('/add_director', addDirector);
+router.post('/add_audience', addAudience);
 
 export default router
