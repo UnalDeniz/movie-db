@@ -49,7 +49,7 @@ const verifyUser = {
       try{
           const username = jwt.verify(token,process.env.SECRET_KEY).username;
           const findUserName = `
-              SELECT * FROM Director WHERE db_name = '${username}';
+              SELECT * FROM Director WHERE username = '${username}';
               `;
           db.query(findUserName, (err, data) => {
               if (err) {
@@ -85,7 +85,7 @@ const verifyUser = {
     try{
         const username = jwt.verify(token,process.env.SECRET_KEY).username;
         const findUserName = `
-            SELECT * FROM Audience WHERE db_name = '${username}';
+            SELECT * FROM Audience WHERE username = '${username}';
             `;
         db.query(findUserName, (err, data) => {
             if (err) {
