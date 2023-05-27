@@ -42,7 +42,7 @@ const audienceTableQuery = `CREATE TABLE IF NOT EXISTS Audience (
 
 const timesTableQuery = `CREATE TABLE IF NOT EXISTS Times (
 	session_date Date NOT NULL,
-  slot INT NOT NULL,
+  slot INT NOT NULL CHECK (0 < slot AND slot < 5),
   PRIMARY KEY (session_date, slot)
 );`;
 
@@ -136,6 +136,22 @@ const playsTableQuery = `CREATE TABLE IF NOT EXISTS Plays(
 );`;
 
 //TODO add check triggers.
+//
+const checkDBCountQuery = `CREATE OR REPLACE FUNCTION check_db_count()
+  RETURNS TRIGGER AS $$
+BEGIN
+  IF (SELECT COUNT(*) FROM Db_manager) >= 4 THEN
+    RAISE EXCEPTION 'The maximum number of rows in the table "db_manager" has been reached.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;`;
+
+const triggerDBCountQuery = `CREATE TRIGGER enforce_db_count
+  BEFORE INSERT OR UPDATE ON Db_manager
+  FOR EACH ROW
+  EXECUTE FUNCTION check_db_count();`;
+
 
 export default async () => {
   try {
@@ -156,6 +172,8 @@ export default async () => {
     await client.query(succeedsTableQuery);
     await client.query(buysTicketTableQuery);
     await client.query(playsTableQuery);
+    await client.query(checkDBCountQuery);
+    await client.query(triggerDBCountQuery);
 
     //TODO run check trigger queries.
 
