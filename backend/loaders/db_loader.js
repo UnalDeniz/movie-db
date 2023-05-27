@@ -147,7 +147,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;`;
 
-const triggerDBCountQuery = `CREATE TRIGGER enforce_db_count
+const triggerDBCountQuery = `CREATE OR REPLACE TRIGGER enforce_db_count
   BEFORE INSERT OR UPDATE ON Db_manager
   FOR EACH ROW
   EXECUTE FUNCTION check_db_count();`;
@@ -169,7 +169,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;`;
 
-const triggerMovieSlotQuery = `CREATE TRIGGER enforce_movie_slots
+const triggerMovieSlotQuery = `CREATE OR REPLACE TRIGGER enforce_movie_slots
 BEFORE INSERT OR UPDATE ON Plays
 FOR EACH ROW
 EXECUTE FUNCTION check_movie_slots();`;
