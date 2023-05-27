@@ -46,19 +46,44 @@ const UserController = {
                 console.log(err);
                 return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
               }
-              const audience = data.rows[0];
-              if (!audience) {
-                return res.status(200).send({message: "Login is successful", accessToken: accessToken, userType:"db_manager"});
-              }
-              else {
-                return res.status(200).send({message: "Login is successful", accessToken: accessToken, userType:"audience"});
-              }
+              return res.status(200).send({message: "Login is successful", accessToken: accessToken, userType:"audience"});
             });
           }
           else {
             return res.status(200).send({message: "Login is successful", accessToken: accessToken, userType:"director"});
           }
         });
+      });
+      
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
+  },
+  db_loginHandler: async function (req, res) {
+    try {
+      const db = await client();
+      const body = req.body;
+      if (!body.db_name) {
+        return res.status(400).send({message: "Provide a username"});
+      }
+      if (!body.password) {
+        return res.status(400).send({message: "Provide a password"});
+      } 
+      const hashedPassword = crypto.createHash('sha256').update(body.password).digest('base64');
+      const query = `
+        SELECT * FROM Db_manager WHERE db_name = '${body.db_name}' AND user_password = '${hashedPassword}';
+        `;
+      db.query(query, (err, data) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+        }
+        const user = data.rows[0];
+        if (!user) return res.status(404).json({ resultMessage: 'Could not found a user with the given username and password.' });
+        delete user.password;
+        const accessToken = jwt.sign({username: user.db_name}, process.env.SECRET_KEY);
+        res.status(200).send({message: "Login is successful", accessToken: accessToken, userType:"db_manager"});
       });
       
     } catch (e) {

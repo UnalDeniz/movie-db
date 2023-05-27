@@ -12,7 +12,7 @@ export default async (req, res) => {
     const hashedPassword = crypto.createHash('sha256').update(body.password).digest('base64');
 
     const addManagerQuery = `
-      INSERT INTO db_manager (db_name, user_password)
+      INSERT INTO Db_manager (db_name, user_password)
       VALUES ('${body.db_name}', '${hashedPassword}'); 
     `;
 
