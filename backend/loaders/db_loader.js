@@ -152,6 +152,28 @@ const triggerDBCountQuery = `CREATE TRIGGER enforce_db_count
   FOR EACH ROW
   EXECUTE FUNCTION check_db_count();`;
 
+const checkMovieSlotQuery = `CREATE OR REPLACE FUNCTION check_movie_slots() 
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM Movie M1, Movie M2, Plays P, Session S1, Session S2 
+        WHERE NEW.session_id = S1.session_id AND M1.movie_id = S1.movie_id 
+        AND P.session_id = S2.session_id AND M2.movie_id = S2.movie_id 
+        AND NEW.session_date = P.session_date AND NEW.theatre_id = P.theatre_id
+        AND (NEW.slot BETWEEN P.slot AND P.slot + M2.duration - 1 
+        OR P.slot BETWEEN NEW.slot AND NEW.slot + M1.duration - 1)
+    ) THEN
+        RAISE EXCEPTION 'Slots overlap for the same day.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;`;
+
+const triggerMovieSlotQuery = `CREATE TRIGGER enforce_movie_slots
+BEFORE INSERT OR UPDATE ON Plays
+FOR EACH ROW
+EXECUTE FUNCTION check_movie_slots();`;
+
 
 export default async () => {
   try {
@@ -174,6 +196,8 @@ export default async () => {
     await client.query(playsTableQuery);
     await client.query(checkDBCountQuery);
     await client.query(triggerDBCountQuery);
+    await client.query(checkMovieSlotQuery);
+    await client.query(triggerMovieSlotQuery);
 
     //TODO run check trigger queries.
 
