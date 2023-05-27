@@ -57,7 +57,6 @@ const movieTableQuery = `CREATE TABLE IF NOT EXISTS Movie (
   movie_name VARCHAR (100) NOT NULL,
   duration INT NOT NULL,
   average_rating FLOAT,
-  platform_id INT, 
   director_username VARCHAR(50) NOT NULL,
   PRIMARY KEY (movie_id),
   FOREIGN KEY (director_username) REFERENCES Director (username) ON DELETE CASCADE ON UPDATE CASCADE
@@ -80,7 +79,7 @@ const sessionTableQuery = `CREATE TABLE IF NOT EXISTS Session (
 
 const dbManagerTableQuery = `CREATE TABLE IF NOT EXISTS Db_manager(
 	db_name VARCHAR (50),
-  user_password VARCHAR (20) NOT NULL,
+  user_password VARCHAR (44) NOT NULL,
   PRIMARY KEY (db_name)
 );`;
 
@@ -129,7 +128,7 @@ const playsTableQuery = `CREATE TABLE IF NOT EXISTS Plays(
 	session_date Date NOT NULL,
   slot INT NOT NULL,
   theatre_id INT NOT NULL,
-  session_id INT NOT NULL,
+  session_id INT NOT NULL UNIQUE,
   FOREIGN KEY (session_id) REFERENCES Session (session_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (theatre_id) REFERENCES Theatre (theatre_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (session_date, slot) REFERENCES Times (session_date, slot) ON DELETE CASCADE ON UPDATE CASCADE,
