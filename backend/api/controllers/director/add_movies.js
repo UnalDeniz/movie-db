@@ -16,7 +16,7 @@ export default async (req, res) => {
 
     const addMovieQuery = `
       INSERT INTO Movie (movie_id, movie_name, duration, director_username)
-      VALUES (${body.movie_id}, '${body.movie_name}', ${body.duration}, ${req.username});
+      VALUES (${body.movie_id}, '${body.movie_name}', ${body.duration}, '${req.userName}');
     `;
 
     db.query(addMovieQuery, (err, data) => {
