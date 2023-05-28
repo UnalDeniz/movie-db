@@ -41,6 +41,7 @@ function UpdatePlatformIdForm() {
 
   const resetForm = () => {
     setUsername('');
+    setPlatformId('');
   };
 
   return (

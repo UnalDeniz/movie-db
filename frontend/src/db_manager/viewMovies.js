@@ -18,7 +18,6 @@ function MovieList() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Form submitted'); // Formun submit edildiğinde konsola mesaj yazdırılıyor
     axios.get('http://localhost:3001/api/manager/list_movies', {
         params: {
           username: director

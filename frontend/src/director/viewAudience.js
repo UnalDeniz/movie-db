@@ -51,13 +51,13 @@ function AudienceList() {
 
       {error && <div>{error}</div>}
 
-      <h1>Movie List</h1>
+      <h1>Audience List</h1>
       <ul>
         {audiences.map(audience => (
           <li key={0}>
-            <strong>Movie ID:</strong> {audience.username}<br />
-            <strong>Movie Name:</strong> {audience.name}<br />
-            <strong>Theatre ID:</strong> {audience.surname}<br />
+            <strong>Username:</strong> {audience.username}<br />
+            <strong>User Name:</strong> {audience.name}<br />
+            <strong>User Surname:</strong> {audience.surname}<br />
             <hr />
           </li>
         ))}

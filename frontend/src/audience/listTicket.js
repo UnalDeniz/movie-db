@@ -36,8 +36,8 @@ const TicketList = () => {
           <h3>Movie {ticket.movie_id}</h3>
           <p>Movie ID: {ticket.movie_id}</p>
           <p>Name: {ticket.movie_name}</p>
-          <p>Director Surname: {ticket.session_id}</p>
-          <p>Nation: {ticket.average_rating}</p>
+          <p>Session ID: {ticket.session_id}</p>
+          <p>Average Rating: {ticket.average_rating}</p>
         </div>
       ))}
     </div>

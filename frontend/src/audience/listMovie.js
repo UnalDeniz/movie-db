@@ -29,7 +29,7 @@ const MovieList = () => {
 
   return (
     <div>
-      <h2>Movie List</h2>
+      <h2>Session List</h2>
       {error && <p>{error}</p>} {/* Hata durumunu yazdır */}
       {movies.map((movie, index) => (
         <div key={index}>
@@ -37,7 +37,7 @@ const MovieList = () => {
           <p>Movie ID: {movie.movie_id}</p>
           <p>Name: {movie.movie_name}</p>
           <p>Director Surname: {movie.user_surname}</p>
-          <p>Nation: {movie.platform_id}</p>
+          <p>Platform ID: {movie.platform_id}</p>
           <p>Theatre ID: {movie.theatre_id}</p>
           <p>Date: {movie.session_date}</p>
           <p>Slot: {movie.slot}</p>

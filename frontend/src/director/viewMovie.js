@@ -35,11 +35,12 @@ const MovieList = () => {
       {movies.map((movie, index) => (
         <div key={index}>
           <h3>Movie {index + 1}</h3>
-          <p>Username: {movie.movie_id}</p>
-          <p>Name: {movie.movie_name}</p>
-          <p>Surname: {movie.theatre_id}</p>
-          <p>Nation: {movie.slot}</p>
-          <p>Platform ID: {movie.predecessors_list}</p>
+          <p>Movie ID: {movie.movie_id}</p>
+          <p>Movie Name: {movie.movie_name}</p>
+          <p>Theatre ID: {movie.theatre_id}</p>
+          <p>Slot: {movie.slot}</p>
+          <p>Date: {movie.date}</p>
+          <p>Predecessors List: {movie.predecessors_list}</p>
         </div>
       ))}
     </div>
