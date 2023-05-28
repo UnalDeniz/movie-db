@@ -6,4 +6,5 @@ export { default as addPredecessor } from './add_predecessor.js';
 export { default as addSlot } from './add_slot.js';
 export { default as listMovie } from './list_movies.js';
 export { default as listAudience } from './list_audience.js';
+export { default as listTheatre } from './list_theatre.js';
 export { default as updateMovie } from './update_movie.js';
