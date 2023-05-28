@@ -8,7 +8,7 @@ export default async (req, res) => {
     const db = await client();
 
     if (!req.query.slot || !req.query.date) {
-      return res.status(400).json({ resultMessage: "Please provide all required fields to list the audience" });
+      return res.status(400).json({ resultMessage: "Please provide all required fields to list the theatres" });
     }
 
     const listTheatreQuery = `
@@ -22,7 +22,7 @@ export default async (req, res) => {
         return res.status(500).json({ resultMessage: `En error occured in the db query. Err: ${err.message}` });
       }
 
-      return res.status(200).json({ resultMessage: `Theatre are successfully listed.`, Theatre: data.rows });
+      return res.status(200).json({ resultMessage: `Theatres are successfully listed.`, Theatre: data.rows });
     });
   } catch (err) {
 

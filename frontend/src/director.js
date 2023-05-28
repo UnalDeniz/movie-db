@@ -5,6 +5,8 @@ import AddPredecessor from './director/addPredecessor';
 import AddSession from './director/addSession';
 import MovieList from './director/viewMovie';
 import AudienceList from './director/viewAudience';
+import UpdateMovie from './director/updateMovie';
+import ViewTheatres from './director/viewTheatres';
 function Dashboard() {
   const [showTheatreForm, setShowTheatreForm] = useState(false);
   const [showMovieForm, setShowMovieForm] = useState(false);
@@ -162,6 +164,8 @@ function Dashboard() {
       {showSessionForm && <AddSession />}
       {showViewMovies && <MovieList />}
       {showViewAudience && <AudienceList />}
+      {showUpdateMovie && <UpdateMovie />}
+      {showViewTheatres && <ViewTheatres />}
     </div>
   );
 }
