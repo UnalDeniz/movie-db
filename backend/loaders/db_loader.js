@@ -152,6 +152,23 @@ const triggerDBCountQuery = `CREATE OR REPLACE TRIGGER enforce_db_count
   FOR EACH ROW
   EXECUTE FUNCTION check_db_count();`;
 
+const checkTheatreCapacityQuery = `CREATE OR REPLACE FUNCTION check_capacity()
+  RETURNS TRIGGER AS $$
+BEGIN
+  IF (SELECT COUNT(*) FROM Buys_Ticket B WHERE NEW.session_id = B.session_id) 
+  >= (SELECT capacity FROM Plays P, Theatre T WHERE NEW.session_id = P.session_id 
+  AND P.theatre_id = T.theatre_id) THEN
+    RAISE EXCEPTION 'Theatre capacity for this session has been reached.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;`;
+
+const triggerTheatreCapacityQuery = `CREATE OR REPLACE TRIGGER enforce_capacity
+  BEFORE INSERT OR UPDATE ON Buys_Ticket
+  FOR EACH ROW
+  EXECUTE FUNCTION check_capacity();`;
+
 const checkMovieSlotQuery = `CREATE OR REPLACE FUNCTION check_movie_slots() 
 RETURNS TRIGGER AS $$
 BEGIN
@@ -198,6 +215,8 @@ export default async () => {
     await client.query(triggerDBCountQuery);
     await client.query(checkMovieSlotQuery);
     await client.query(triggerMovieSlotQuery);
+    await client.query(checkTheatreCapacityQuery);
+    await client.query(triggerTheatreCapacityQuery);
 
     //TODO run check trigger queries.
 
