@@ -6,8 +6,8 @@ export default async (req, res) => {
     const db = await client();
 
     const listMovieQuery = `
-    SELECT M.movie_id, movie_name, user_surname, platform_id, theatre_id, session_date, slot FROM Users U, Director D, Movie M, Plays P, Session S
-    WHERE director_username = '${req.userName}' and U.username = D.username and M.movie_id = S.movie_id and P.session_id = S.session_id;`;
+    SELECT M.movie_id, movie_name, theatre_id, session_date, slot FROM Movie M, Plays P, Session S
+    WHERE director_username = '${req.userName}' and M.movie_id = S.movie_id and P.session_id = S.session_id;`;
 
     db.query(listMovieQuery, async (err, data) => {
       if (err) {
