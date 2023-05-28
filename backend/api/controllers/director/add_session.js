@@ -14,24 +14,27 @@ export default async (req, res) => {
       VALUES (${body.session_id}, ${body.movie_id}); 
     `;
 
-    const getDurationQuery = `
-    SELECT duration FROM Movie WHERE movie_id = ${body.movie_id};
-    `
     db.query(addSessionQuery, (err, data) => {
       if (err) {
         return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
       }
 
-      db.query(getDurationQuery, (err, data) => {
-        let duration = data.rows[0].duration;
+      let addTimesQuery = `
+      INSERT INTO Times (session_date, slot) 
+      VALUES ('${body.date}', ${body.slot})
+      ON CONFLICT DO NOTHING;
+      `
 
-        let addTimesQuery = `
-        INSERT INTO Times (session_date, slot) 
-        VALUES ('${body.date}', ${body.slot})
-        ON CONFLICT DO NOTHING;
-        `
+      db.query(addTimesQuery, (err, data) => {
+        if (err) {
+          const revertSessionQuery = `
+          DELETE FROM Session WHERE session_id = ${body.movie_id};
+          `;
 
-        db.query(addTimesQuery);
+          db.query(revertSessionQuery);
+          return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+
+        }
 
         let addPlaysQuery = `
         INSERT INTO Plays (session_date, slot, theatre_id, session_id)
@@ -40,12 +43,18 @@ export default async (req, res) => {
 
         db.query(addPlaysQuery, (err, data) => {
           if (err) {
+            const revertSessionQuery = `
+            DELETE FROM Session WHERE session_id = ${body.movie_id};
+            `;
+
+            db.query(revertSessionQuery);
             return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
+
           } else {
             return res.status(200).json({ resultMessage: "Session is successfully added." })
           }
         })
-      })
+      });
     });
   } catch (err) {
 
