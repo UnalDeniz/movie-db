@@ -230,7 +230,7 @@ $$ LANGUAGE plpgsql;
 `;
 
 const triggerAvgRating = `
-CREATE TRIGGER calculate_average_rating
+CREATE OR REPLACE TRIGGER calculate_average_rating
 AFTER INSERT OR UPDATE ON Rates
 FOR EACH ROW
 EXECUTE FUNCTION update_average_rating();
