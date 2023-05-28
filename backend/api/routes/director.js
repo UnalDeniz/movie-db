@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import verify from '../../verify.js'
-import { addGenre, addMovie, addTheatre, addSlot, addSession, addPredecessor, listMovie } from '../controllers/director/index.js';
+import { addGenre, addMovie, addTheatre, addSlot, addSession, addPredecessor, listMovie, updateMovie } from '../controllers/director/index.js';
 
 const router = Router();
 
@@ -15,5 +15,7 @@ router.post('/add_session', verify.verifyDirector, addSession);
 router.post('/add_predecessor', verify.verifyDirector, addPredecessor);
 
 router.get('/list_movie', verify.verifyDirector, listMovie);
+
+router.post('/update_movie', verify.verifyDirector, updateMovie);
 
 export default router
