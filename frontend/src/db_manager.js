@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import AddDirectorForm from './addDirector';
-import AddAudienceForm from './addAudience';
-import DeleteAudienceForm from './deleteAudience';
-import UpdatePlatformIdForm from './updatePlatform';
-import ViewDirectors from './viewDirectors';
+import AddDirectorForm from './db_manager/addDirector';
+import AddAudienceForm from './db_manager/addAudience';
+import DeleteAudienceForm from './db_manager/deleteAudience';
+import UpdatePlatformIdForm from './db_manager/updatePlatform';
+import ViewDirectors from './db_manager/viewDirectors';
+import ViewMovies from './db_manager/viewMovies';
 
 function Dashboard() {
   const [showDirectorForm, setShowDirectorForm] = useState(false);
@@ -162,6 +163,7 @@ function Dashboard() {
       {showDeleteAudienceForm && <DeleteAudienceForm />}
       {showUpdatePlatformIdForm && <UpdatePlatformIdForm />}
       {showViewDirectors && <ViewDirectors />}
+      {showViewMoviesByDirector && <ViewMovies />}
     </div>
   );
 }

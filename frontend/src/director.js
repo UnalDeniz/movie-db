@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-
+import AddTheatre from './director/addTheatre';
+import AddMovie from './director/addMovie';
 function Dashboard() {
-  const [showDirectorForm, setShowDirectorForm] = useState(false);
-  const [showAudienceForm, setShowAudienceForm] = useState(false);
+  const [showTheatreForm, setShowTheatreForm] = useState(false);
+  const [showMovieForm, setShowMovieForm] = useState(false);
   const [showDeleteAudienceForm, setShowDeleteAudienceForm] = useState(false);
   const [showUpdatePlatformIdForm, setShowUpdatePlatformIdForm] = useState(false);
   const [showViewDirectors, setShowViewDirectors] = useState(false);
@@ -10,9 +11,9 @@ function Dashboard() {
   const [showViewMoviesByDirector, setShowViewMoviesByDirector] = useState(false);
   const [showViewAverageRating, setShowViewAverageRating] = useState(false);
 
-  const handleAddDirector = () => {
-    setShowDirectorForm(true);
-    setShowAudienceForm(false);
+  const handleAddTheatre = () => {
+    setShowTheatreForm(true);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -21,9 +22,9 @@ function Dashboard() {
     setShowViewAverageRating(false);
   };
 
-  const handleAddAudience = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(true);
+  const handleAddMovie = () => {
+    setShowTheatreForm(false);
+    setShowMovieForm(true);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -33,8 +34,8 @@ function Dashboard() {
   };
 
   const handleDeleteAudience = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(true);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -44,8 +45,8 @@ function Dashboard() {
   };
 
   const handleUpdatePlatformId = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(true);
     setShowViewDirectors(false);
@@ -55,8 +56,8 @@ function Dashboard() {
   };
 
   const handleViewDirectors = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(true);
@@ -66,8 +67,8 @@ function Dashboard() {
   };
 
   const handleViewRatings = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -77,8 +78,8 @@ function Dashboard() {
   };
 
   const handleViewMoviesByDirector = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -88,8 +89,8 @@ function Dashboard() {
   };
 
   const handleViewAverageRating = () => {
-    setShowDirectorForm(false);
-    setShowAudienceForm(false);
+    setShowTheatreForm(false);
+    setShowMovieForm(false);
     setShowDeleteAudienceForm(false);
     setShowUpdatePlatformIdForm(false);
     setShowViewDirectors(false);
@@ -104,21 +105,21 @@ function Dashboard() {
       <div>
         <button
           style={{ backgroundColor: 'green', color: 'white', marginRight: '10px' }}
-          onClick={handleAddDirector}
+          onClick={handleAddMovie}
         >
           List Theatres
         </button>
         <button
           style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }}
-          onClick={handleAddAudience}
+          onClick={handleAddMovie}
         >
           Add Movie
         </button>
         <button
           style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
-          onClick={handleDeleteAudience}
+          onClick={handleAddTheatre}
         >
-          Add Predecessors
+          Add Theatre
         </button>
         <button
           style={{ backgroundColor: 'purple', color: 'white', marginRight: '10px' }}
@@ -138,8 +139,15 @@ function Dashboard() {
         >
           Update Movie Name
         </button>
+        <button
+          style={{ backgroundColor: 'teal', color: 'white', marginRight: '10px' }}
+          onClick={handleViewRatings}
+        >
+          Update Movie Name
+        </button>
       </div>
-
+      {showTheatreForm && <AddTheatre />}
+      {showMovieForm && <AddMovie />}
     </div>
   );
 }
