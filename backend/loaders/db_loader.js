@@ -195,9 +195,12 @@ const checkPredecessorQuery = `CREATE OR REPLACE FUNCTION check_predecessor()
 RETURNS TRIGGER AS $$
 BEGIN
     IF EXISTS (
-        SELECT 1 FROM Movie M, Succeeds S
-        WHERE NEW.movie_id = S.movie_id AND S.predecessor_id NOT IN 
-        (SELECT movie_id FROM Buys_Ticket B WHERE NEW.username = B.username))
+        SELECT 1 FROM Succeeds S1, Session S2
+        WHERE NEW.session_id = S2.session_id AND S2.movie_id = S1.successor_id 
+        AND S1.predecessor_id NOT IN 
+        (SELECT movie_id FROM Buys_Ticket B, Session S3 WHERE NEW.username = B.username
+        AND B.session_id = S3.session_id AND (S3.session_date < S2.session_date OR 
+        (S3.session_date = S2.session_date AND S3.slot < S2.slot ))))
         THEN
         RAISE EXCEPTION 'There is a unwatched predecessor.';
     END IF;
