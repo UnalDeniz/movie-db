@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import AddDirectorForm from './addDirector';
+import AddAudienceForm from './addAudience';
+import DeleteAudienceForm from './deleteAudience';
 
 function Dashboard() {
   const [showDirectorForm, setShowDirectorForm] = useState(false);
@@ -154,6 +156,8 @@ function Dashboard() {
       </div>
 
       {showDirectorForm && <AddDirectorForm />}
+      {showAudienceForm && <AddAudienceForm />}
+      {showDeleteAudienceForm && <DeleteAudienceForm />}
     </div>
   );
 }

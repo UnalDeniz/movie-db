@@ -1,15 +1,15 @@
 import client from '../../../loaders/db_loader.js';
 
 export default async (req, res) => {
-  if (!req.query.username) {
+  if (!req.body.username) {
     return res.status(400).json({ "resultMessage": "Please provide the username of the audience that will be deleted." });
   }
 
   try {
     const db = await client();
 
-    const checkAudienceQuery = `SELECT username FROM Audience WHERE username = '${req.query.username}'`
-    const deleteAudienceQuery = ` DELETE FROM Users WHERE username = '${req.query.username}'; `;
+    const checkAudienceQuery = `SELECT username FROM Audience WHERE username = '${req.body.username}'`
+    const deleteAudienceQuery = ` DELETE FROM Users WHERE username = '${req.body.username}'; `;
 
     db.query(checkAudienceQuery, (err, data) => {
 
