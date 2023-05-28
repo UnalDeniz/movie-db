@@ -2,17 +2,16 @@ import client from '../../../loaders/db_loader.js';
 
 export default async (req, res) => {
   const body = req.body;
-  const query = req.query;
-  if (!body || !query.username || !body.platform_id) {
+  if (!body || !body.username || !body.platform_id) {
     return res.status(400).json({ "resultMessage": "Please provide all required fields to update an instructor." });
   }
 
   try {
     const db = await client();
 
-    const checkDirectorQuery = `SELECT username FROM Director WHERE username = '${query.username}'`
+    const checkDirectorQuery = `SELECT username FROM Director WHERE username = '${body.username}'`
 
-    const updateDirectorQuery = `UPDATE Director SET platform_id = ${body.platform_id} WHERE username = '${query.username}';`;
+    const updateDirectorQuery = `UPDATE Director SET platform_id = ${body.platform_id} WHERE username = '${body.username}';`;
 
     db.query(checkDirectorQuery, (err, data) => {
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddDirectorForm from './addDirector';
 import AddAudienceForm from './addAudience';
 import DeleteAudienceForm from './deleteAudience';
+import UpdatePlatformIdForm from './updatePlatform';
 
 function Dashboard() {
   const [showDirectorForm, setShowDirectorForm] = useState(false);
@@ -148,7 +149,7 @@ function Dashboard() {
           View Movies by Director
         </button>
         <button
-          style={{ backgroundColor: 'pink', color: 'white', marginRight: '10px' }}
+          style={{ backgroundColor: 'pink', color: 'black', marginRight: '10px' }}
           onClick={handleViewAverageRating}
         >
           View Average Rating
@@ -158,6 +159,7 @@ function Dashboard() {
       {showDirectorForm && <AddDirectorForm />}
       {showAudienceForm && <AddAudienceForm />}
       {showDeleteAudienceForm && <DeleteAudienceForm />}
+      {showUpdatePlatformIdForm && <UpdatePlatformIdForm />}
     </div>
   );
 }
