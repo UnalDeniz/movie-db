@@ -13,9 +13,9 @@ router.post('/add_theatre', verify.verifyDirector, addTheatre);
 router.post('/add_slot', verify.verifyDirector, addSlot);
 router.post('/add_session', verify.verifyDirector, addSession);
 router.post('/add_predecessor', verify.verifyDirector, addPredecessor);
+router.post('/update_movie', verify.verifyDirector, updateMovie);
 
 router.get('/list_movie', verify.verifyDirector, listMovie);
 
-router.post('/update_movie', verify.verifyDirector, updateMovie);
 
 export default router

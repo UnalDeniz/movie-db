@@ -11,7 +11,7 @@ router.post('/add_director', verify.verifyManager, addDirector);
 router.post('/add_manager', verify.verifyManager, addManager);
 router.post('/add_platform', verify.verifyManager, addPlatform);
 router.post('/update_director', verify.verifyManager, updateDirector);
-router.delete('/delete_audience', verify.verifyManager, deleteAudience);
+router.post('/delete_audience', verify.verifyManager, deleteAudience);
 router.get('/list_director', verify.verifyManager, listDirector);
 
 export default router
