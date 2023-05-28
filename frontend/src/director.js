@@ -1,102 +1,105 @@
 import React, { useState } from 'react';
 import AddTheatre from './director/addTheatre';
 import AddMovie from './director/addMovie';
+import AddPredecessor from './director/addPredecessor';
+import AddSession from './director/addSession';
+import MovieList from './director/viewMovie';
 function Dashboard() {
   const [showTheatreForm, setShowTheatreForm] = useState(false);
   const [showMovieForm, setShowMovieForm] = useState(false);
-  const [showDeleteAudienceForm, setShowDeleteAudienceForm] = useState(false);
-  const [showUpdatePlatformIdForm, setShowUpdatePlatformIdForm] = useState(false);
-  const [showViewDirectors, setShowViewDirectors] = useState(false);
-  const [showViewRatings, setShowViewRatings] = useState(false);
-  const [showViewMoviesByDirector, setShowViewMoviesByDirector] = useState(false);
-  const [showViewAverageRating, setShowViewAverageRating] = useState(false);
+  const [showPredecessorForm, setShowPredecessorForm] = useState(false);
+  const [showSessionForm, setShowSessionForm] = useState(false);
+  const [showViewAudience, setShowViewAudience] = useState(false);
+  const [showViewMovies, setShowViewMovies] = useState(false);
+  const [showViewTheatres, setShowTheatres] = useState(false);
+  const [showUpdateMovie, setShowUpdateMovie] = useState(false);
 
   const handleAddTheatre = () => {
     setShowTheatreForm(true);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
   const handleAddMovie = () => {
     setShowTheatreForm(false);
     setShowMovieForm(true);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
-  const handleDeleteAudience = () => {
+  const handleAddPredecessor = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(true);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(true);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
-  const handleUpdatePlatformId = () => {
+  const handleAddSession = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(true);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(true);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
-  const handleViewDirectors = () => {
+  const handleViewAudience = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(true);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(true);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
-  const handleViewRatings = () => {
+  const handleViewMovies = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(true);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(true);
+    setShowTheatres(false);
+    setShowUpdateMovie(false);
   };
 
-  const handleViewMoviesByDirector = () => {
+  const handleViewTheatres = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(true);
-    setShowViewAverageRating(false);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(true);
+    setShowUpdateMovie(false);
   };
 
-  const handleViewAverageRating = () => {
+  const handleUpdateMovie = () => {
     setShowTheatreForm(false);
     setShowMovieForm(false);
-    setShowDeleteAudienceForm(false);
-    setShowUpdatePlatformIdForm(false);
-    setShowViewDirectors(false);
-    setShowViewRatings(false);
-    setShowViewMoviesByDirector(false);
-    setShowViewAverageRating(true);
+    setShowPredecessorForm(false);
+    setShowSessionForm(false);
+    setShowViewAudience(false);
+    setShowViewMovies(false);
+    setShowTheatres(false);
+    setShowUpdateMovie(true);
   };
 
   return (
@@ -105,9 +108,9 @@ function Dashboard() {
       <div>
         <button
           style={{ backgroundColor: 'green', color: 'white', marginRight: '10px' }}
-          onClick={handleAddMovie}
+          onClick={handleAddTheatre}
         >
-          List Theatres
+          Add Theatre
         </button>
         <button
           style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }}
@@ -117,37 +120,46 @@ function Dashboard() {
         </button>
         <button
           style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
-          onClick={handleAddTheatre}
+          onClick={handleAddPredecessor}
         >
-          Add Theatre
+          Add Predecessor
         </button>
         <button
           style={{ backgroundColor: 'purple', color: 'white', marginRight: '10px' }}
-          onClick={handleUpdatePlatformId}
+          onClick={handleAddSession}
         >
-          View Movies
+          Add Session
         </button>
         <button
           style={{ backgroundColor: 'red', color: 'white', marginRight: '10px' }}
-          onClick={handleViewDirectors}
+          onClick={handleViewAudience}
         >
           View All Audiences
         </button>
         <button
           style={{ backgroundColor: 'teal', color: 'white', marginRight: '10px' }}
-          onClick={handleViewRatings}
+          onClick={handleViewMovies}
         >
-          Update Movie Name
+          View Movies
         </button>
         <button
-          style={{ backgroundColor: 'teal', color: 'white', marginRight: '10px' }}
-          onClick={handleViewRatings}
+          style={{ backgroundColor: 'yellow', color: 'black', marginRight: '10px' }}
+          onClick={handleViewTheatres}
         >
-          Update Movie Name
+          View Theatres
+        </button>
+        <button
+          style={{ backgroundColor: 'pink', color: 'black', marginRight: '10px' }}
+          onClick={handleUpdateMovie}
+        >
+          Update Movie
         </button>
       </div>
       {showTheatreForm && <AddTheatre />}
       {showMovieForm && <AddMovie />}
+      {showPredecessorForm && <AddPredecessor />}
+      {showSessionForm && <AddSession />}
+      {showViewMovies && <MovieList />}
     </div>
   );
 }
