@@ -197,7 +197,7 @@ BEGIN
     IF EXISTS (
         SELECT 1 FROM Movie M, Succeeds S
         WHERE NEW.movie_id = S.movie_id AND S.predecessor_id NOT IN 
-        (SELECT movie_id FROM Buys_Ticket B WHERE NEW.username = B.username)
+        (SELECT movie_id FROM Buys_Ticket B WHERE NEW.username = B.username))
         THEN
         RAISE EXCEPTION 'There is a unwatched predecessor.';
     END IF;
