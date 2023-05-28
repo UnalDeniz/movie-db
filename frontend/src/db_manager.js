@@ -3,6 +3,7 @@ import AddDirectorForm from './addDirector';
 import AddAudienceForm from './addAudience';
 import DeleteAudienceForm from './deleteAudience';
 import UpdatePlatformIdForm from './updatePlatform';
+import ViewDirectors from './viewDirectors';
 
 function Dashboard() {
   const [showDirectorForm, setShowDirectorForm] = useState(false);
@@ -160,6 +161,7 @@ function Dashboard() {
       {showAudienceForm && <AddAudienceForm />}
       {showDeleteAudienceForm && <DeleteAudienceForm />}
       {showUpdatePlatformIdForm && <UpdatePlatformIdForm />}
+      {showViewDirectors && <ViewDirectors />}
     </div>
   );
 }
