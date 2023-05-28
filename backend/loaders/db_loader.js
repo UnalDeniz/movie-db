@@ -55,7 +55,7 @@ const genreTableQuery = `CREATE TABLE IF NOT EXISTS Genre(
 const movieTableQuery = `CREATE TABLE IF NOT EXISTS Movie (
 	movie_id INT,
   movie_name VARCHAR (100) NOT NULL,
-  duration INT NOT NULL,
+  duration INT NOT NULL CHECK (0 < duration AND duration < 5),
   average_rating FLOAT,
   director_username VARCHAR(50) NOT NULL,
   PRIMARY KEY (movie_id),
@@ -191,6 +191,24 @@ BEFORE INSERT OR UPDATE ON Plays
 FOR EACH ROW
 EXECUTE FUNCTION check_movie_slots();`;
 
+const checkPredecessorQuery = `CREATE OR REPLACE FUNCTION check_predecessor() 
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM Movie M, Succeeds S
+        WHERE NEW.movie_id = S.movie_id AND S.predecessor_id NOT IN 
+        (SELECT movie_id FROM Buys_Ticket B WHERE NEW.username = B.username)
+        THEN
+        RAISE EXCEPTION 'There is a unwatched predecessor.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;`;
+
+const triggerPredecessorQuery = `CREATE OR REPLACE TRIGGER enforce_predecessor
+BEFORE INSERT OR UPDATE ON Buys_Ticket
+FOR EACH ROW
+EXECUTE FUNCTION check_predecessor();`;
 
 export default async () => {
   try {
@@ -217,6 +235,8 @@ export default async () => {
     await client.query(triggerMovieSlotQuery);
     await client.query(checkTheatreCapacityQuery);
     await client.query(triggerTheatreCapacityQuery);
+    await client.query(checkPredecessorQuery);
+    await client.query(triggerPredecessorQuery);
 
     //TODO run check trigger queries.
 
