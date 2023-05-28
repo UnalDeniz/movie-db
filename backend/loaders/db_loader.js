@@ -94,7 +94,7 @@ const subscribesTableQuery = `CREATE TABLE IF NOT EXISTS Subscribes (
 const ratesTableQuery = `CREATE TABLE IF NOT EXISTS Rates (
 	movie_id INT,
   username VARCHAR (50),
-  rating FLOAT NOT NULL,
+  rating FLOAT NOT NULL CHECK (0 < rating AND rating <5),
   FOREIGN KEY (username) REFERENCES Audience (username) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (movie_id) REFERENCES Movie (movie_id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (username, movie_id)
@@ -213,29 +213,6 @@ BEFORE INSERT OR UPDATE ON Buys_Ticket
 FOR EACH ROW
 EXECUTE FUNCTION check_predecessor();`;
 
-const updateAvgRating = `
-CREATE OR REPLACE FUNCTION update_average_rating()
-  RETURNS TRIGGER AS $$
-BEGIN
-  UPDATE Movie
-  SET average_rating = (
-    SELECT AVG(rating)
-    FROM Rates
-    WHERE movie_id = NEW.movie_id
-  )
-  WHERE movie_id = NEW.movie_id;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-`;
-
-const triggerAvgRating = `
-CREATE TRIGGER calculate_average_rating
-AFTER INSERT OR UPDATE ON Rates
-FOR EACH ROW
-EXECUTE FUNCTION update_average_rating();
-`;
-
 export default async () => {
   try {
     const client = new Pool(dbConfig);
@@ -263,8 +240,6 @@ export default async () => {
     await client.query(triggerTheatreCapacityQuery);
     await client.query(checkPredecessorQuery);
     await client.query(triggerPredecessorQuery);
-    await client.query(updateAvgRating);
-    await client.query(triggerAvgRating);
 
     //TODO run check trigger queries.
 

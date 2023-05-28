@@ -6,6 +6,7 @@ import UpdatePlatformIdForm from './db_manager/updatePlatform';
 import ViewDirectors from './db_manager/viewDirectors';
 import ViewMovies from './db_manager/viewMovies';
 import ViewRatings from './db_manager/viewAverage';
+import ViewAllRatings from './db_manager/viewRatings';
 
 function Dashboard() {
   const [showDirectorForm, setShowDirectorForm] = useState(false);
@@ -166,6 +167,7 @@ function Dashboard() {
       {showViewDirectors && <ViewDirectors />}
       {showViewMoviesByDirector && <ViewMovies />}
       {showViewAverageRating && <ViewRatings />}
+      {showViewRatings && <ViewAllRatings />}
     </div>
   );
 }

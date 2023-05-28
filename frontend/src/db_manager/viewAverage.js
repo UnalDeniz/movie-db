@@ -33,6 +33,9 @@ const ViewAverage = () => {
   
     return (
       <div>
+        <br />
+        <br />
+        <br />
         <input type="text" value={movieId} onChange={handleInputChange} />
         <button onClick={handleButtonClick}>Submit</button>
         {errorMessage && <p>{errorMessage}</p>}

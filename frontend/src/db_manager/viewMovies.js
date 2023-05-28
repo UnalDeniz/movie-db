@@ -1,59 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const MovieSearch = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [response, setResponse] = useState([]);
+function MovieList() {
+  const [director, setDirector] = useState('');
+  const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [accessToken, setAccessToken] = useState('');
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem('accessToken');
+    setAccessToken(storedAccessToken);
+  }, []);
 
-    try {
-      const queryResponse = await axios.get('http://localhost:3001/api/manager/list_movies', {
-        params: { searchTerm },
-        headers: { Authorization: localStorage.getItem('accessToken') }
-      });
-      console.log(queryResponse.data);
-      setResponse(queryResponse.data.Movies);
-      setError(null);
-    } catch (error) {
-      console.error(error);
-      setError('Failed to fetch data');
-    }
+  const handleInputChange = (event) => {
+    setDirector(event.target.value);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Form submitted'); // Formun submit edildiğinde konsola mesaj yazdırılıyor
+    axios.get('http://localhost:3001/api/manager/list_movies', {
+        params: {
+          username: director
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        setMovies(response.data.Movies);
+        setError(null);
+      })
+      .catch(error => {
+        setMovies([]);
+        setError('Failed to fetch movies.');
+        console.error(error);
+      });
+      console.log(movies);
+  };
+
+  
 
   return (
     <div>
-      <h2>Movie Search</h2>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          placeholder="Enter a movie name"
-        />
-        <button type="submit">Search</button>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Director:
+          <input type="text" value={director} onChange={handleInputChange} />
+        </label>
+        <button type="submit">Submit</button>
       </form>
 
-      {error && <p>{error}</p>}
-      {response.length > 0 ? (
-  response.map((movie, index) => (
-    <div key={index}>
-      <h3>Movie {index + 1}</h3>
-      <p>Movie ID: {movie.movie_id}</p>
-      <p>Name: {movie.movie_name}</p>
-      <p>Theatre ID: {movie.theatre_id}</p>
-      <p>Slot: {movie.slot}</p>
-      <p>Predecessors List: {movie.predecessors_list}</p>
-    </div>
-  ))
-) : (
-  <p>No movies found.</p>
-)}
+      {error && <div>{error}</div>}
 
+      <h1>Movie List</h1>
+      <ul>
+        {movies.map(movie => (
+          <li key={movie.movie_id}>
+            <strong>Movie ID:</strong> {movie.movie_id}<br />
+            <strong>Movie Name:</strong> {movie.movie_name}<br />
+            <strong>Theatre ID:</strong> {movie.theatre_id}<br />
+            <strong>District:</strong> {movie.district}<br />
+            <strong>Slot:</strong> {movie.slot}<br />
+            <strong>Date:</strong> {movie.date}<br />
+            <hr />
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
-export default MovieSearch;
+export default MovieList;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AudienceList() {
-  const [movie, setMovie] = useState('');
-  const [audiences, setAudiences] = useState([]);
+function RatingList() {
+  const [audience, setAudience] = useState('');
+  const [ratings, setRatings] = useState([]);
   const [error, setError] = useState(null);
   const [accessToken, setAccessToken] = useState('');
 
@@ -13,28 +13,29 @@ function AudienceList() {
   }, []);
 
   const handleInputChange = (event) => {
-    setMovie(event.target.value);
+    setAudience(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.get('http://localhost:3001/api/director/list_audience', {
+    axios.get('http://localhost:3001/api/manager//list_ratings', {
         params: {
-          id: movie
+          username: audience
         },
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       })
       .then(response => {
-        setAudiences(response.data.Audience);
+        setRatings(response.data.Ratings);
         setError(null);
       })
       .catch(error => {
-        setAudiences([]);
-        setError('Failed to fetch movies.');
+        setRatings([]);
+        setError('Failed to fetch ratings.');
         console.error(error);
       });
+      console.log(ratings);
   };
 
   
@@ -43,8 +44,8 @@ function AudienceList() {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Movie ID:
-          <input type="text" value={movie} onChange={handleInputChange} />
+          Audience:
+          <input type="text" value={audience} onChange={handleInputChange} />
         </label>
         <button type="submit">Submit</button>
       </form>
@@ -53,11 +54,11 @@ function AudienceList() {
 
       <h1>Movie List</h1>
       <ul>
-        {audiences.map(audience => (
-          <li key={0}>
-            <strong>Movie ID:</strong> {audience.username}<br />
-            <strong>Movie Name:</strong> {audience.name}<br />
-            <strong>Theatre ID:</strong> {audience.surname}<br />
+        {ratings.map(rating => (
+          <li key={rating.movie_id}>
+            <strong>Movie ID:</strong> {rating.movie_id}<br />
+            <strong>Movie Name:</strong> {rating.movie_name}<br />
+            <strong>Rating:</strong> {rating.rating}<br />
             <hr />
           </li>
         ))}
@@ -66,4 +67,4 @@ function AudienceList() {
   );
 }
 
-export default AudienceList;
+export default RatingList;

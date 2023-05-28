@@ -4,6 +4,7 @@ import AddMovie from './director/addMovie';
 import AddPredecessor from './director/addPredecessor';
 import AddSession from './director/addSession';
 import MovieList from './director/viewMovie';
+import AudienceList from './director/viewAudience';
 function Dashboard() {
   const [showTheatreForm, setShowTheatreForm] = useState(false);
   const [showMovieForm, setShowMovieForm] = useState(false);
@@ -160,6 +161,7 @@ function Dashboard() {
       {showPredecessorForm && <AddPredecessor />}
       {showSessionForm && <AddSession />}
       {showViewMovies && <MovieList />}
+      {showViewAudience && <AudienceList />}
     </div>
   );
 }

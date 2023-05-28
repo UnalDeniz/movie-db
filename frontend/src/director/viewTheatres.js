@@ -16,7 +16,7 @@ const MovieList = () => {
               Authorization: `Bearer ${token}`,
             },
           });
-          setMovies(response.data.Theatres);
+          setTheatres(response.data.Theatre);
         }
       } catch (error) {
         setError("Failed to list directors: " + error.message); 
@@ -30,16 +30,14 @@ const MovieList = () => {
 
   return (
     <div>
-      <h2>Movie List</h2>
+      <h2>Theatre List</h2>
       {error && <p>{error}</p>} {/* Hata durumunu yazdır */}
-      {movies.map((movie, index) => (
+      {theatres.map((theatre, index) => (
         <div key={index}>
-          <h3>Movie {index + 1}</h3>
-          <p>Username: {movie.movie_id}</p>
-          <p>Name: {movie.movie_name}</p>
-          <p>Surname: {movie.theatre_id}</p>
-          <p>Nation: {movie.slot}</p>
-          <p>Platform ID: {movie.predecessors_list}</p>
+          <h3>Theatre {index + 1}</h3>
+          <p>Username: {theatre.theatre_id}</p>
+          <p>Name: {theatre.district}</p>
+          <p>Surname: {theatre.theatre_capacity}</p>
         </div>
       ))}
     </div>
