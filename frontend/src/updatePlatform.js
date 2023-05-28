@@ -20,23 +20,23 @@ function UpdatePlatformIdForm() {
       platform_id
     };
 
-    axios.put('http://localhost:3001/api/manager/update_director', data, {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`
-  }
-})
-  .then(response => {
-    console.log(response.data);
-    setSuccessMessage('Platform updated successfully!');
-    resetForm();
-    setErrorMessage(''); // Hata mesajını temizle
-  })
-  .catch(error => {
-    console.error('Error updating platform:', error);
-    setErrorMessage('Failed to update platform.');
-    setSuccessMessage(''); // Başarı mesajını temizle
-  });
+    axios.post('http://localhost:3001/api/manager/update_director', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+        setSuccessMessage('Platform updated successfully!');
+        resetForm();
+        setErrorMessage(''); // Hata mesajını temizle
+      })
+      .catch(error => {
+        console.error('Error updating platform:', error);
+        setErrorMessage('Failed to update platform.');
+        setSuccessMessage(''); // Başarı mesajını temizle
+      });
   };
 
   const resetForm = () => {
