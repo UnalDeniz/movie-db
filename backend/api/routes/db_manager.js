@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import verify from '../../verify.js'
-import { addPlatform, addManager, addDirector, updateDirector, listDirector, addAudience, deleteAudience } from '../controllers/db_manager/index.js';
+import { addPlatform, addManager, addDirector, updateDirector, listDirector, listMovies, addAudience, deleteAudience } from '../controllers/db_manager/index.js';
 
 const router = Router();
 
@@ -13,5 +13,6 @@ router.post('/add_platform', verify.verifyManager, addPlatform);
 router.post('/update_director', verify.verifyManager, updateDirector);
 router.post('/delete_audience', verify.verifyManager, deleteAudience);
 router.get('/list_director', verify.verifyManager, listDirector);
+router.get('/list_movies', verify.verifyManager, listMovies);
 
 export default router
