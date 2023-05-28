@@ -7,7 +7,7 @@ function AddDirectorForm() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [nation, setNation] = useState('');
-  const [platformId, setPlatformId] = useState('');
+  const [platform_id, setPlatformId] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [accessToken, setAccessToken] = useState('');
@@ -25,7 +25,7 @@ function AddDirectorForm() {
       name,
       surname,
       nation,
-      platformId
+      platform_id
     };
 
     axios
@@ -110,7 +110,7 @@ function AddDirectorForm() {
       <input
         type="text"
         placeholder="Platform ID"
-        value={platformId}
+        value={platform_id}
         onChange={e => setPlatformId(e.target.value)}
       />
       <br />

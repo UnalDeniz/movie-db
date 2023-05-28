@@ -18,15 +18,13 @@ function DeleteAudienceForm() {
       username
     };
 
-    axios.post('http://localhost:3001/api/manager/delete_audience', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      },
-      data: {
-        username
-      }
-    })
+    axios
+      .post('http://localhost:3001/api/manager/delete_audience', data, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
       .then(response => {
         console.log(response.data);
         setSuccessMessage('Audience deleted successfully!');
