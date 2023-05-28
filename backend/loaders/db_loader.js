@@ -94,7 +94,7 @@ const subscribesTableQuery = `CREATE TABLE IF NOT EXISTS Subscribes (
 const ratesTableQuery = `CREATE TABLE IF NOT EXISTS Rates (
 	movie_id INT,
   username VARCHAR (50),
-  rating FLOAT NOT NULL CHECK (0 < rating AND rating <5),
+  rating FLOAT NOT NULL CHECK (0 <= rating AND rating <= 5),
   FOREIGN KEY (username) REFERENCES Audience (username) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (movie_id) REFERENCES Movie (movie_id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (username, movie_id)
@@ -195,12 +195,12 @@ const checkPredecessorQuery = `CREATE OR REPLACE FUNCTION check_predecessor()
 RETURNS TRIGGER AS $$
 BEGIN
     IF EXISTS (
-        SELECT 1 FROM Succeeds S1, Session S2
+        SELECT 1 FROM Succeeds S1, Session S2, Plays P1
         WHERE NEW.session_id = S2.session_id AND S2.movie_id = S1.successor_id 
-        AND S1.predecessor_id NOT IN 
-        (SELECT movie_id FROM Buys_Ticket B, Session S3 WHERE NEW.username = B.username
-        AND B.session_id = S3.session_id AND (S3.session_date < S2.session_date OR 
-        (S3.session_date = S2.session_date AND S3.slot < S2.slot ))))
+        AND P1.session_id = S2.session_id AND S1.predecessor_id NOT IN 
+        (SELECT movie_id FROM Buys_Ticket B, Plays P2 WHERE NEW.username = B.username
+        AND B.session_id = P2.session_id AND (P2.session_date < P1.session_date OR 
+        (P2.session_date = P1.session_date AND P2.slot < P1.slot ))))
         THEN
         RAISE EXCEPTION 'There is a unwatched predecessor.';
     END IF;
