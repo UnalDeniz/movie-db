@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Dashboard from './db_manager';
+import DbInterface from './db_manager';
+import DirectorInterface from './director';
+import AudienceInterface from './audience';
 
 function App() {
-  const [db_name, setDbName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedInDb, setLoggedInDb] = useState(false);
+  const [isLoggedInDir, setLoggedInDir] = useState(false);
+  const [isLoggedInAud, setLoggedInAud] = useState(false);
 
   const handleUserLogin = () => {
     // Kullanıcı girişi işlemleri
-    console.log('Username:', db_name);
-    console.log('Password:', password);
-  };
-
-  const handleDbManagerLogin = () => {
-    // Veritabanı yöneticisi girişi işlemleri
-    console.log('DB Name:', db_name);
+    console.log('Username:', username);
     console.log('Password:', password);
 
     axios
-      .post('http://localhost:3001/api/user/db_login', {
-        db_name: db_name,
+      .post('http://localhost:3001/api/user/login', {
+        username: username,
         password: password,
       })
       .then((response) => {
@@ -29,7 +27,13 @@ function App() {
         console.log('Response:', response.data);
         localStorage.setItem("accessToken", response.data.accessToken);
         // İstenilen sayfaya yönlendirme işlemleri burada yapılabilir
-        setLoggedIn(true);
+        if (response.data.userType=="director") {
+          setLoggedInDir(true);
+        }
+        else {
+          setLoggedInAud(true);
+        }
+        
       })
       .catch((error) => {
         // Hata durumunda işlemler
@@ -45,8 +49,45 @@ function App() {
       });
   };
 
-  if (isLoggedIn) {
-    return <Dashboard />;
+  const handleDbManagerLogin = () => {
+    // Veritabanı yöneticisi girişi işlemleri
+    console.log('DB Name:', username);
+    console.log('Password:', password);
+
+    axios
+      .post('http://localhost:3001/api/user/db_login', {
+        db_name: username,
+        password: password,
+      })
+      .then((response) => {
+        // Başarılı yanıt durumunda işlemler
+        console.log('Response:', response.data);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        // İstenilen sayfaya yönlendirme işlemleri burada yapılabilir
+        setLoggedInDb(true);
+      })
+      .catch((error) => {
+        // Hata durumunda işlemler
+        console.error('Error:', error.response.data);
+        if (error.response.status === 404) {
+          const reqMessage = error.response.data.resultMessage;
+          console.log('Request Message:', reqMessage);
+          // Hata mesajını kullanarak istenilen işlemleri yapabilirsiniz
+          setError(reqMessage);
+        } else {
+          setError('An error occurred. Please try again.');
+        }
+      });
+  };
+
+  if (isLoggedInDb) {
+    return <DbInterface />;
+  }
+  if (isLoggedInAud) {
+    return <AudienceInterface />;
+  }
+  if (isLoggedInDir) {
+    return <DirectorInterface />;
   }
 
   return (
@@ -56,8 +97,8 @@ function App() {
         <input
           type="text"
           placeholder="Username"
-          value={db_name}
-          onChange={(e) => setDbName(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
