@@ -28,7 +28,7 @@ export default async (req, res) => {
       db.query(addTimesQuery, (err, data) => {
         if (err) {
           const revertSessionQuery = `
-          DELETE FROM Session WHERE session_id = ${body.movie_id};
+          DELETE FROM Session WHERE session_id = ${body.session_id};
           `;
 
           db.query(revertSessionQuery);
@@ -44,7 +44,7 @@ export default async (req, res) => {
         db.query(addPlaysQuery, (err, data) => {
           if (err) {
             const revertSessionQuery = `
-            DELETE FROM Session WHERE session_id = ${body.movie_id};
+            DELETE FROM Session WHERE session_id = ${body.session_id};
             `;
 
             db.query(revertSessionQuery);
