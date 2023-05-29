@@ -54,3 +54,21 @@ In such a case check the end of your /var/lib/pgsql/data/pg_hba.conf file, the a
 - Run npm start
 
 - The frontend will open in you default browser in a second
+
+## How to add the initial data 
+
+- There are no functions to add manager, genre and platform in the UI
+
+- To add these you can still use the backend api.
+
+- To add manager use http://localhost:3001/api/manager/add_manager with body fields db_name and password
+
+- To add platforms first login as a manager from http://localhost:3001/api/user/db_login with body fields db_name and password
+
+- Then use http://localhost:3001/api/manager/add_platform with header authorization=*token-you-got-from-the-response-of-login* and body fields platform_id and platform_name
+
+- To add genres first login as a director from http://localhost:3001/api/user/login with body fields username and password
+
+- Then use http://localhost:3001/api/director/add_genre with header authorization=*token-you-got-from-the-response-of-login* and body fields genre_name and genre_id
+
+- For all other data input you can use the UI.
