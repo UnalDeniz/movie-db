@@ -26,7 +26,7 @@ export default async (req, res) => {
       }
 
       if (!data.rows[0]) {
-        return res.status(404).json({ resultMessage: "A movie with the given id can not be found." });
+        return res.status(500).json({ resultMessage: "A movie with the given id can not be found." });
       } else {
         if (data.rows[0].average_rating == null) {
           return res.status(404).json({ resultMessage: "Nobody has voted the given movie yet." });
