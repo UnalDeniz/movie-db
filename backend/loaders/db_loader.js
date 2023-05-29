@@ -198,9 +198,9 @@ BEGIN
         SELECT 1 FROM Succeeds S1, Session S2, Plays P1
         WHERE NEW.session_id = S2.session_id AND S2.movie_id = S1.successor_id 
         AND P1.session_id = S2.session_id AND S1.predecessor_id NOT IN 
-        (SELECT movie_id FROM Buys_Ticket B, Plays P2 WHERE NEW.username = B.username
-        AND B.session_id = P2.session_id AND (P2.session_date < P1.session_date OR 
-        (P2.session_date = P1.session_date AND P2.slot < P1.slot ))))
+        (SELECT movie_id FROM Buys_Ticket B, Plays P2, Session S3 WHERE S3.session_id = P2.session_id 
+        AND NEW.username = B.username AND B.session_id = P2.session_id AND 
+        (P2.session_date < P1.session_date OR (P2.session_date = P1.session_date AND P2.slot < P1.slot ))))
         THEN
         RAISE EXCEPTION 'There is a unwatched predecessor.';
     END IF;
