@@ -25,7 +25,7 @@ export default async (req, res) => {
       }
 
       if (!data.rows[0]) {
-        return res.status(500).json({ resultMessage: `You have no movie with the given id.` })
+        return res.status(404).json({ resultMessage: `You have no movie with the given id.` })
       }
 
       db.query(listAudienceQuery, (err, data) => {
