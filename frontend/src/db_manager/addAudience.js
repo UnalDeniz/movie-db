@@ -6,6 +6,7 @@ function AddAudienceForm() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [subbed_platforms, setPlatforms] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [accessToken, setAccessToken] = useState('');
@@ -21,7 +22,8 @@ function AddAudienceForm() {
       username,
       password,
       name,
-      surname
+      surname,
+      subbed_platforms,
     };
 
     axios
@@ -49,6 +51,11 @@ function AddAudienceForm() {
     setPassword('');
     setName('');
     setSurname('');
+    setPlatforms([]);
+  };
+  const handlePlatformsChange = (e) => {
+    const selectedPlatforms = e.target.value.split(',').map((platform) => platform.trim());
+    setPlatforms(selectedPlatforms);
   };
 
   return (
@@ -91,6 +98,17 @@ function AddAudienceForm() {
         value={surname}
         onChange={e => setSurname(e.target.value)}
       />
+      <br />
+      <br />
+      <label>
+        Platforms:
+        <input
+          type="text"
+          value={subbed_platforms.join(',')}
+          onChange={handlePlatformsChange}
+          placeholder="Enter platforms separated by comma"
+        />
+      </label>
       <br />
       <br />
       <button onClick={handleFormSubmit}>Submit</button>
