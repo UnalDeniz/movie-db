@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-//app.use(baseURL, router);
+app.use(baseURL, router);
 
 app.listen(port, err => {
   if (err) {
