@@ -39,7 +39,7 @@ const MovieList = () => {
           <p>Movie Name: {movie.movie_name}</p>
           <p>Theatre ID: {movie.theatre_id}</p>
           <p>Slot: {movie.slot}</p>
-          <p>Date: {movie.date}</p>
+          <p>Date: {movie.session_date}</p>
           <p>Predecessors List: {movie.predecessors_list}</p>
         </div>
       ))}

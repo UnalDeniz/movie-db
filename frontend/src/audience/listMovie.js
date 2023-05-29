@@ -43,6 +43,7 @@ const MovieList = () => {
           <p>Theatre ID: {movie.theatre_id}</p>
           <p>Date: {movie.session_date}</p>
           <p>Slot: {movie.slot}</p>
+          <p>Predecessors List: {movie.predecessors_list}</p>
         </div>
       ))}
     </div>

@@ -39,6 +39,7 @@ const TicketList = () => {
           <p>Movie ID: {ticket.movie_id}</p>
           <p>Name: {ticket.movie_name}</p>
           <p>Session ID: {ticket.session_id}</p>
+          <p>Your Rating: {ticket.rating}</p>
           <p>Average Rating: {ticket.average_rating}</p>
         </div>
       ))}
