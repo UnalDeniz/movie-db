@@ -236,6 +236,32 @@ FOR EACH ROW
 EXECUTE FUNCTION update_average_rating();
 `;
 
+const checkSubQuery = `
+CREATE OR REPLACE FUNCTION prevent_invalid_rating()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Check if the audience has subscribed to the platform of the movie's director
+  IF NOT EXISTS (
+    SELECT 1
+    FROM Subscribes s
+    JOIN Director d ON NEW.username = s.username AND d.username = NEW.director_username
+    WHERE s.platform_id = d.platform_id
+  ) THEN
+    RAISE EXCEPTION 'The audience has not subscribed to the platform of the movie''s director.';
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+`;
+
+const triggerSubQuery = `
+CREATE OR REPLACE TRIGGER check_valid_rating
+BEFORE INSERT ON Rates
+FOR EACH ROW
+EXECUTE FUNCTION prevent_invalid_rating();
+`;
+
 export default async () => {
   try {
     const client = new Pool(dbConfig);
@@ -265,6 +291,8 @@ export default async () => {
     await client.query(triggerPredecessorQuery);
     await client.query(updateAvgRating);
     await client.query(triggerAvgRating);
+    await client.query(checkSubQuery);
+    await client.query(triggerSubQuery);
 
     //TODO run check trigger queries.
 
