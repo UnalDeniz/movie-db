@@ -12,13 +12,13 @@
 
     - DB_HOST="localhost"
 
-    - DB_USER=<your-choice-of-username-for-postgres>
+    - DB_USER=~your-choice-of-username-for-postgres~
 
-    - DB_PASSWORD=<your-choice-of-password-for-postgres>
+    - DB_PASSWORD=~your-choice-of-password-for-postgres~
 
-    - DB_PORT=<your-choice-of-port-for-postgres> (make sure to select an unused port, we have used 5432)
+    - DB_PORT=~your-choice-of-port-for-postgres~ (make sure to select an unused port, we have used 5432)
 
-    - DB_NAME=<your-choice-of-database-name-for-postgres> (we have used movies)
+    - DB_NAME=~your-choice-of-database-name-for-postgres~ (we have used movies)
 
     - BASE_URL="api"
 
@@ -26,17 +26,17 @@
 
 - Log in into postgre shell (sudo -u postgres psql in linux / postgres -U psql in windows)
 
-- CREATE USER <username-you-have-chosen-previously> WITH PASSWORD <password-you-have-chosen-previously>;
+- CREATE USER ~username-you-have-chosen-previously~ WITH PASSWORD ~password-you-have-chosen-previously~;
 
-- ALTER USER <username-you-have-chosen-previously> CREATEDB;
+- ALTER USER ~username-you-have-chosen-previously~ CREATEDB;
 
-- CREATE DATABASE <username-you-have-chosen-previously> OWNER <username-you-have-chosen-previously>;
+- CREATE DATABASE ~username-you-have-chosen-previously~ OWNER ~username-you-have-chosen-previously~;
 
 - \q (to quit)
 
 - Now try logging in to make sure database and user created successfully
 
-- psql <username-you-have-chosen-previously> <username-you-have-chosen-previously>
+- psql ~username-you-have-chosen-previously~ ~username-you-have-chosen-previously~
 
 - In this step if you have encountered a peer authentication problem in linux it may be caused because of postgres configuration.
 In such a case check the end of your /var/lib/pgsql/data/pg_hba.conf file, the authentication method should be md5 instead of peer.
