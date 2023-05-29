@@ -19,13 +19,13 @@ function MovieList() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios.get('http://localhost:3001/api/manager/list_movies', {
-        params: {
-          username: director
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+      params: {
+        username: director
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
       .then(response => {
         setMovies(response.data.Movies);
         setError(null);
@@ -35,10 +35,10 @@ function MovieList() {
         setError('Failed to fetch movies.');
         console.error(error);
       });
-      console.log(movies);
+    console.log(movies);
   };
 
-  
+
 
   return (
     <div>
@@ -61,7 +61,7 @@ function MovieList() {
             <strong>Theatre ID:</strong> {movie.theatre_id}<br />
             <strong>District:</strong> {movie.district}<br />
             <strong>Slot:</strong> {movie.slot}<br />
-            <strong>Date:</strong> {movie.date}<br />
+            <strong>Date:</strong> {movie.session_date}<br />
             <hr />
           </li>
         ))}

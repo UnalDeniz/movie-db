@@ -19,7 +19,7 @@ const ViewAverage = () => {
       },
     })
       .then(response => {
-        console.log(response.data); 
+        console.log(response.data);
         if (response.data.Ratings && response.data.Ratings.length > 0) {
           setRating(response.data.Ratings[0].overall_rating);
           setMovieName(response.data.Ratings[0].movie_name);
@@ -46,8 +46,8 @@ const ViewAverage = () => {
       <input type="text" value={movieId} onChange={handleInputChange} />
       <button onClick={handleButtonClick}>Submit</button>
       {errorMessage && <p>{errorMessage}</p>}
-      {rating && <p>Overall Rating: {rating} <br />Movie Name: {movieName} <br />Movie Id: {movieId}</p>}
-      
+      {rating && <p>Overall Rating: {rating} <br />Movie Name: {movieName} <br />Movie Id: {resId}</p>}
+
     </div>
   );
 };

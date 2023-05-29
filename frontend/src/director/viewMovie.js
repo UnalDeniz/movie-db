@@ -19,19 +19,19 @@ const MovieList = () => {
           setMovies(response.data.Movies);
         }
       } catch (error) {
-        setError("Failed to list directors: " + error.message); 
-        
+        // setError("Failed to list movies: " + error.message);
+
       }
     };
 
     fetchData();
   }, []);
-  
+
 
   return (
     <div>
       <h2>Movie List</h2>
-      {error && <p>{error}</p>} 
+      {error && <p>{error}</p>}
       {movies.map((movie, index) => (
         <div key={index}>
           <h3>Movie {index + 1}</h3>
