@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null); // Yeni hata durumu
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const MovieList = () => {
           setMovies(response.data.Movies);
         }
       } catch (error) {
-        setError("Failed to list movies: " + error.message); // Hata durumunu ayarla
+        setError("Failed to list movies: " + error.message); 
       }
     };
 

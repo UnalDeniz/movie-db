@@ -8,7 +8,6 @@ function DeleteAudienceForm() {
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -29,12 +28,12 @@ function DeleteAudienceForm() {
         console.log(response.data);
         setSuccessMessage('Audience deleted successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error deleting audience:', error);
         setErrorMessage('Failed to delete audience.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

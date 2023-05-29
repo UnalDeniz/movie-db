@@ -12,7 +12,6 @@ function AddSession() {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -37,12 +36,12 @@ function AddSession() {
         console.log(response.data);
         setSuccessMessage('Session added successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error adding session:', error);
         setErrorMessage('Failed to add session.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

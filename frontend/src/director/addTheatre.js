@@ -11,7 +11,6 @@ function AddTheatre() {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -35,12 +34,12 @@ function AddTheatre() {
         console.log(response.data);
         setSuccessMessage('Theatre added successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error adding theatre:', error);
         setErrorMessage('Failed to add theatre.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

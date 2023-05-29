@@ -12,7 +12,6 @@ function AddAudienceForm() {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -37,12 +36,12 @@ function AddAudienceForm() {
         console.log(response.data);
         setSuccessMessage('Audience added successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error adding audience:', error);
         setErrorMessage('Failed to add audience.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

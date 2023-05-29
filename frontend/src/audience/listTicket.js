@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
-  const [error, setError] = useState(null); // Yeni hata durumu
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const TicketList = () => {
           setTickets(response.data.Tickets);
         }
       } catch (error) {
-        setError("Failed to list tickets: " + error.message); // Hata durumunu ayarla
+        setError("Failed to list tickets: " + error.message);
       }
     };
 
@@ -30,7 +30,7 @@ const TicketList = () => {
   return (
     <div>
       <h2>Ticket List</h2>
-      {error && <p>{error}</p>} {/* Hata durumunu yazdır */}
+      {error && <p>{error}</p>} 
       {tickets.map((ticket, index) => (
         <div key={index}>
           <h3>Movie {ticket.movie_id}</h3>

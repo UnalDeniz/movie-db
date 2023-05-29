@@ -9,7 +9,6 @@ function UpdateMovieForm() {
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -30,12 +29,12 @@ function UpdateMovieForm() {
         console.log(response.data);
         setSuccessMessage('Movie updated successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error updating movie:', error);
         setErrorMessage('Failed to update movie.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

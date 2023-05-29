@@ -13,7 +13,6 @@ function AddDirectorForm() {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -39,12 +38,12 @@ function AddDirectorForm() {
         console.log(response.data);
         setSuccessMessage('Director added successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error adding director:', error);
         setErrorMessage('Failed to add director.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

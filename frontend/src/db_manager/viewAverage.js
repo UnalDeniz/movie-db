@@ -15,7 +15,7 @@ const ViewAverage = () => {
       },
     })
       .then(response => {
-        console.log(response.data); // İsteğe bağlı olarak yanıtı işleyebilirsiniz
+        console.log(response.data); 
         if (response.data.Ratings && response.data.Ratings.length > 0) {
           setRating(response.data.Ratings[0].overall_rating);
         } else {

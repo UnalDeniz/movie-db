@@ -13,7 +13,6 @@ function App() {
   const [isLoggedInAud, setLoggedInAud] = useState(false);
 
   const handleUserLogin = () => {
-    // Kullanıcı girişi işlemleri
     console.log('Username:', username);
     console.log('Password:', password);
 
@@ -23,10 +22,8 @@ function App() {
         password: password,
       })
       .then((response) => {
-        // Başarılı yanıt durumunda işlemler
         console.log('Response:', response.data);
         localStorage.setItem("accessToken", response.data.accessToken);
-        // İstenilen sayfaya yönlendirme işlemleri burada yapılabilir
         if (response.data.userType=="director") {
           setLoggedInDir(true);
         }
@@ -36,12 +33,10 @@ function App() {
         
       })
       .catch((error) => {
-        // Hata durumunda işlemler
         console.error('Error:', error.response.data);
         if (error.response.status === 404) {
           const reqMessage = error.response.data.resultMessage;
           console.log('Request Message:', reqMessage);
-          // Hata mesajını kullanarak istenilen işlemleri yapabilirsiniz
           setError(reqMessage);
         } else {
           setError('An error occurred. Please try again.');
@@ -50,7 +45,6 @@ function App() {
   };
 
   const handleDbManagerLogin = () => {
-    // Veritabanı yöneticisi girişi işlemleri
     console.log('DB Name:', username);
     console.log('Password:', password);
 
@@ -60,19 +54,15 @@ function App() {
         password: password,
       })
       .then((response) => {
-        // Başarılı yanıt durumunda işlemler
         console.log('Response:', response.data);
         localStorage.setItem("accessToken", response.data.accessToken);
-        // İstenilen sayfaya yönlendirme işlemleri burada yapılabilir
         setLoggedInDb(true);
       })
       .catch((error) => {
-        // Hata durumunda işlemler
         console.error('Error:', error.response.data);
         if (error.response.status === 404) {
           const reqMessage = error.response.data.resultMessage;
           console.log('Request Message:', reqMessage);
-          // Hata mesajını kullanarak istenilen işlemleri yapabilirsiniz
           setError(reqMessage);
         } else {
           setError('An error occurred. Please try again.');

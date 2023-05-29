@@ -30,12 +30,12 @@ function AddPredecessor() {
         console.log(response.data);
         setSuccessMessage('Predecessor added successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error adding predecessor:', error);
         setErrorMessage('Failed to add predecessor.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage('');
       });
   };
 

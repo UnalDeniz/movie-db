@@ -8,14 +8,13 @@ function BuyTicket() {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
 
   const handleFormSubmit = () => {
     const data = {
-        session_id: session_id // Burada session_id değerini uygun bir şekilde atamalısınız
+        session_id: session_id 
       };
       
       axios
@@ -29,12 +28,12 @@ function BuyTicket() {
           console.log(response.data);
           setSuccessMessage('Ticket bought successfully!');
           resetForm();
-          setErrorMessage(null); // Hata mesajını temizle
+          setErrorMessage(null); 
         })
         .catch(error => {
           console.error('Error buying ticket:', error);
           setErrorMessage('Failed to buy ticket.');
-          setSuccessMessage(null); // Başarı mesajını temizle
+          setSuccessMessage(null); 
         });
   };
 

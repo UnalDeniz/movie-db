@@ -9,7 +9,6 @@ function UpdatePlatformIdForm() {
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    // localStorage'dan accessToken'ı alma
     const storedAccessToken = localStorage.getItem('accessToken');
     setAccessToken(storedAccessToken);
   }, []);
@@ -30,12 +29,12 @@ function UpdatePlatformIdForm() {
         console.log(response.data);
         setSuccessMessage('Platform updated successfully!');
         resetForm();
-        setErrorMessage(''); // Hata mesajını temizle
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('Error updating platform:', error);
         setErrorMessage('Failed to update platform.');
-        setSuccessMessage(''); // Başarı mesajını temizle
+        setSuccessMessage(''); 
       });
   };
 

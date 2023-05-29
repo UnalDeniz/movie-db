@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const DirectorList = () => {
   const [directors, setDirectors] = useState([]);
-  const [error, setError] = useState(null); // Yeni hata durumu
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const DirectorList = () => {
           setDirectors(response.data.Directors);
         }
       } catch (error) {
-        setError("Failed to list directors: " + error.message); // Hata durumunu ayarla
+        setError("Failed to list directors: " + error.message); 
       }
     };
 
@@ -30,7 +30,7 @@ const DirectorList = () => {
   return (
     <div>
       <h2>Director List</h2>
-      {error && <p>{error}</p>} {/* Hata durumunu yazdır */}
+      {error && <p>{error}</p>} 
       {directors.map((director, index) => (
         <div key={index}>
           <h3>Director {index + 1}</h3>
