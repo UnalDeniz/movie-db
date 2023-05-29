@@ -33,7 +33,7 @@ export default async (req, res) => {
           db.query(revertUserQuery);
           return res.status(500).json({ resultMessage: `An error occurred in the db query. Err: ${err.message}` });
         }
-        if (!body.subbed_platforms) {
+        if (!body.subbed_platforms[0]) {
 
           return res.status(200).json({ resultMessage: "Audience is successfully added." });
 
