@@ -18,9 +18,11 @@ const MovieList = () => {
             },
           });
           setMovies(response.data.Movies);
+          setError(null);
         }
       } catch (error) {
         setError("Failed to list movies: " + error.message); 
+        setMovies([]);
       }
     };
 

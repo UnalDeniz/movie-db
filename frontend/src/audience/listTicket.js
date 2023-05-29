@@ -18,9 +18,11 @@ const TicketList = () => {
             },
           });
           setTickets(response.data.Tickets);
+          setError(null);
         }
       } catch (error) {
         setError("Failed to list tickets: " + error.message);
+        setTickets([]);
       }
     };
 

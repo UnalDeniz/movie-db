@@ -18,9 +18,11 @@ const DirectorList = () => {
             },
           });
           setDirectors(response.data.Directors);
+          setError(null);
         }
       } catch (error) {
         setError("Failed to list directors: " + error.message); 
+        setDirectors([]);
       }
     };
 
