@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +32,7 @@ const TicketList = () => {
   return (
     <div>
       <h2>Ticket List</h2>
-      {error && <p>{error}</p>} 
+      {error && <p>{error}</p>}
       {tickets.map((ticket, index) => (
         <div key={index}>
           <h3>Movie {ticket.movie_id}</h3>
@@ -40,7 +40,7 @@ const TicketList = () => {
           <p>Name: {ticket.movie_name}</p>
           <p>Session ID: {ticket.session_id}</p>
           <p>Your Rating: {ticket.rating}</p>
-          <p>Average Rating: {ticket.average_rating}</p>
+          <p>Overall Rating: {ticket.overall_rating}</p>
         </div>
       ))}
     </div>
