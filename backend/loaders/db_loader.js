@@ -237,15 +237,15 @@ EXECUTE FUNCTION update_average_rating();
 `;
 
 const checkSubQuery = `
-CREATE OR REPLACE FUNCTION prevent_invalid_rating()
+CREATE OR REPLACE FUNCTION prevent_unsubbed_rating()
 RETURNS TRIGGER AS $$
 BEGIN
   -- Check if the audience has subscribed to the platform of the movie's director
   IF NOT EXISTS (
     SELECT 1
-    FROM Subscribes s
-    JOIN Director d ON NEW.username = s.username AND d.username = NEW.director_username
-    WHERE s.platform_id = d.platform_id
+    FROM Subscribes S, Director D, Movie M
+    WHERE S.platform_id = D.platform_id AND S.username = NEW.username 
+    AND NEW.movie_id = M.movie_id AND M.director_username = D.username
   ) THEN
     RAISE EXCEPTION 'The audience has not subscribed to the platform of the movie''s director.';
   END IF;
@@ -256,6 +256,32 @@ $$ LANGUAGE plpgsql;
 `;
 
 const triggerSubQuery = `
+CREATE OR REPLACE TRIGGER check_unsubbed_rating
+BEFORE INSERT ON Rates
+FOR EACH ROW
+EXECUTE FUNCTION prevent_unsubbed_rating();
+`;
+
+const checkRateQuery = `
+CREATE OR REPLACE FUNCTION prevent_invalid_rating()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Check if the audience has bought a ticket for the movie
+  IF NOT EXISTS (
+    SELECT 1
+    FROM Buys_Ticket bt
+    JOIN Session s ON NEW.movie_id = s.movie_id AND bt.session_id = s.session_id
+    WHERE bt.username = NEW.username
+  ) THEN
+    RAISE EXCEPTION 'The audience has not bought a ticket for the movie.';
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+`;
+
+const triggerRateQuery = `
 CREATE OR REPLACE TRIGGER check_valid_rating
 BEFORE INSERT ON Rates
 FOR EACH ROW
@@ -293,6 +319,8 @@ export default async () => {
     await client.query(triggerAvgRating);
     await client.query(checkSubQuery);
     await client.query(triggerSubQuery);
+    await client.query(checkRateQuery);
+    await client.query(triggerRateQuery);
 
     //TODO run check trigger queries.
 
